@@ -1,9 +1,21 @@
-<h1>Account Login</h1>
+<nav class="navbar navbar-light bg-light justify-content-center">
+  <span class="navbar-brand mb-0 h1">Account Login</span>
+</nav>
 
-<form action="/" method="POST">
-  <input name="email" type="email" placeholder="Email" required>
-  <input name="password" type="password" placeholder="Password" required>
-  <button type="submit">Login</button>
-</form>
+<div class="d-flex flex-column align-items-center justify-content-around" style="height: 400px;">
 
-{{#if loginError}}<h3>登入錯誤，帳號密碼有誤或該用戶尚未註冊</h3>{{/if}}
+  <div>
+    <form action="/" method="POST" class="d-flex flex-column align-items-center">
+      <input class="form-control m-1" name="email" type="email" placeholder="Email" required>
+      <input class="form-control m-1" name="password" type="password" placeholder="Password" required>
+      <button class="btn btn-primary m-1" type="submit">Login</button>
+    </form>
+  </div>
+
+  {{#if loginError}}
+  <div class="alert alert-danger" role="alert">
+    登入失敗! 帳號密碼錯誤 或 用戶不存在!
+  </div>
+  {{/if}}
+
+</div>
