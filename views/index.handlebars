@@ -1,0 +1,9 @@
+<h1>Account Login</h1>
+
+<form action="/" method="POST">
+  <input name="email" type="email" placeholder="Email" required>
+  <input name="password" type="password" placeholder="Password" required>
+  <button type="submit">Login</button>
+</form>
+
+{{#if loginError}}<h3>登入錯誤，帳號密碼有誤或該用戶尚未註冊</h3>{{/if}}
