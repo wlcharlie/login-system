@@ -1,10 +1,18 @@
 # 帳密檢查
 
+## 更新
+5/9 
+* main: 使用session-express登入資訊
+* branch(cookie-parser): 使用cookie-parser驗證登入資訊
+
+
 ## 開發工具
 * Node.js v10.15.0
 * nodemon v2.0.7
 * Express 4.17.1
 * Express-Handlbars 5.3.2
+* cookie-parser: 1.4.5
+* express-session": 1.17.1
 
 ## 功能
 一個簡單的登入工具　*可查看models/users.js的使用者資料試用看看*
