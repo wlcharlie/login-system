@@ -1,5 +1,5 @@
 const express = require('express')
-const cookieParser = require('cookie-parser')
+const expressSession = require('express-session')
 const exphbs = require('express-handlebars')
 const users = require('./models/users')
 const loginVerify = require('./loginVerify')
@@ -9,12 +9,20 @@ const port = 4000
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
-app.use(cookieParser('55688'))
+app.use(expressSession({
+  secret: "meowmeowhss",
+  resave: false,
+  saveUninitialized: false,
+  cookie: { maxAge: 30000 }
+
+}))
 app.use(express.urlencoded({ extended: true }))
 
 
 app.get('/', (req, res) => {
-  if (Object.keys(req.signedCookies).length) {
+  console.log(req.session)
+  console.log(req.sessionID)
+  if (req.session.loginUser) {
     res.redirect('/welcome')
   } else {
     res.render('index')
@@ -23,12 +31,11 @@ app.get('/', (req, res) => {
 
 app.post('/', (req, res) => {
   const loginStatus = loginVerify(req.body).loginStatus
-  const loginUser = loginVerify(req.body).loginUser
   const loginError = loginVerify(req.body).loginError
 
   if (loginStatus) {
-    res.clearCookie('firstName')
-    res.cookie('firstName', loginUser, { signed: true, maxAge: 30000 })
+    const loginUser = loginVerify(req.body).loginUser
+    req.session.loginUser = loginUser
     res.redirect('/welcome')
   } else {
     res.render('index', { loginError })
@@ -36,9 +43,8 @@ app.post('/', (req, res) => {
 })
 
 app.get('/welcome', (req, res) => {
-  if (Object.keys(req.signedCookies).length) {
-    const loginUser = req.signedCookies.firstName
-    res.render('welcome', { loginUser })
+  if (req.session.loginUser) {
+    res.render('welcome', { loginUser: req.session.loginUser })
   } else {
     res.redirect('/')
   }
